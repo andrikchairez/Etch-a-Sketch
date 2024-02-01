@@ -1,0 +1,49 @@
+.canvas {
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction:row;
+    max-width:960px;
+    min-height:960px;
+    background-color: white;
+}
+
+button {
+    background-color: #2B2930;
+    border: none; /* Remove borders */
+    width:128px;
+    height:128px;
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 12px;
+}
+
+.menuRow {
+    display:flex;
+    gap:16px;
+    justify-content: center;
+    padding:16px;
+    background-color: black;
+    border-radius: 22px;
+}
+
+body {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    background-color: #2B2930;
+}
+
+.contentContainerColumn {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 976px;
+    gap:32px;
+}
+
+
+span.material-symbols-outlined {
+    color:white;
+    font-size:60px;
+}
+
