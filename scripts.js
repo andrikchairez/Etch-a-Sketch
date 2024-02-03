@@ -8,10 +8,15 @@ const canvasMaxWidth = 960;
 const gridFab = document.querySelector(".gridFabRow");
 const randomizeRbgFab = document.querySelector(".randomizeRbgFabRow");
 const clearFab = document.querySelector(".clearFabRow");
+//randomizeSketchColorFeature 
+const controller = new AbortController();
+const { signal } = controller;
+let rainbowToggle = false;
+let rainbowRgbValue;
+//1 of 4
 
 //I chose this as our pixel size (accounting for border thickness)
 //in order to have a grid initially populate with this square size
-
 let size = 56;
 //Pretty arbitrary number. Can change to whatever, but if you 
 //change the number, you must first ADD 4, then divide the
@@ -31,7 +36,7 @@ function createDiv(){
 
     square.addEventListener('mouseover', () => {
         square.style.backgroundColor = "black";
-    });
+    }, { signal });
 };
 
 function clearCanvas() {
@@ -39,6 +44,13 @@ function clearCanvas() {
         canvas.removeChild(canvas.firstChild)
     }
 }
+
+//randomizeSketchColorFeature 
+function randomColor(){
+    return "rgb(" + Math.floor(Math.random() * 256) + ", " + Math.floor(Math.random() * 256) + ", " + Math.floor(Math.random() * 256) + ")";
+}
+
+// 2 of 4
 
 //Finally, to create our first grid when a user renders the site
 for(let i = 0; i < (256); i++){
@@ -58,14 +70,48 @@ gridFab.addEventListener("click", () => {
         for(let i = 0; i < (gridSizeInput ** 2); i++){
             createDiv();
         };
+        //randomizeSketchColorFeature 
+
+        //I decided to do this because the way I was handling the RGB toggle
+        //was making it really hard to re-add the old "black" background
+        //event listener
+        const canvasChild = document.querySelectorAll(".canvasChild");
+        canvasChild.forEach(child => {
+            child.addEventListener("mouseover", () => {
+                child.style.backgroundColor = "black";
+            }
+        )});
+        //3 of 4
     } else {
         alert("Please use a number above 0, and below 100 and use no letters or special notation!")
     };
 });
 
+//randomizeSketchColorFeature 
+randomizeRbgFab.addEventListener("click", () => {
+    rainbowToggle = !rainbowToggle;
+    if(rainbowToggle === true){
+        controller.abort()
+        const canvasChild = document.querySelectorAll(".canvasChild");
+        canvasChild.forEach(child => {
+            child.addEventListener("mouseover", () => {
+                child.style.backgroundColor = randomColor();
+            });
+        });
+    }else if(rainbowToggle === false){
+        controller.abort()
+        const canvasChild = document.querySelectorAll(".canvasChild");
+        canvasChild.forEach(child => {
+            child.addEventListener("mouseover", () => {
+                child.style.backgroundColor = "black";
+            });
+        });
+    };
+});
+//4 of 4
 clearFab.addEventListener("click", () => {
-    const canvasChildren = document.querySelectorAll(".canvasChild");
-    canvasChildren.forEach(child => {
+    const canvasChild = document.querySelectorAll(".canvasChild");
+    canvasChild.forEach(child => {
         child.style.backgroundColor = "white";
     });
 });
